@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>VANET Smart Contract</title>
+
+    <link rel="stylesheet" type="text/css" href="msg.css">
+
+    <script src="./node_modules/web3/dist/web3.min.js"></script>
+
+</head>
+<body>
+    
+    <h1 id="heading" style="color:white;" style="text-align:center">VANET Message Portal</h1>
+
+    
+    <div class="flex-container">
+
+        <div id="left" class="flex-child" style="flex-grow: 1.5">
+        
+          <img id="loader" src="https://loading.io/spinners/double-ring/lg.double-ring-spinner.gif">
+
+          <label for="name" class="col-lg-2 control-label">Information:</label>
+          <input id="info" type="text">
+
+          <label for="name" class="col-lg-2 control-label">Location:</label>
+          <input id="location" type="text">
+
+          <label for="name" class="col-lg-2 control-label">Street:</label>
+          <input id="street" type="text">
+
+          <label for="name" class="col-lg-2 control-label">Time:</label>
+          <input id="time" type="text">
+
+          <button id="button">Send Message</button>
+        </div>
+
+        <div id="right" class="flex-child" style="flex-grow: 1">
+          <p id="message"></p>
+        </div>
+
+    </div>
+      
+
+    <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
+
+
+    <script>
+       if (typeof web3 !== 'undefined') {
+           web3 = new Web3(web3.currentProvider);
+       } else {
+           web3 = new Web3(new Web3.providers.HttpProvider("http://localhost:8545"));
+       }
+
+       web3.eth.defaultAccount = web3.eth.accounts[0];
+
+       var MESSAGEContract = web3.eth.contract([
+  {
+    "constant": false,
+    "inputs": [
+      {
+        "name": "_info",
+        "type": "string"
+      },
+      {
+        "name": "_location",
+        "type": "string"
+      },
+      {
+        "name": "_street",
+        "type": "string"
+      },
+      {
+        "name": "_time",
+        "type": "string"
+      }
+    ],
+    "name": "setInfo",
+    "outputs": [],
+    "payable": false,
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "constant": true,
+    "inputs": [],
+    "name": "getInfo",
+    "outputs": [
+      {
+        "name": "",
+        "type": "string"
+      },
+      {
+        "name": "",
+        "type": "string"
+      },
+      {
+        "name": "",
+        "type": "string"
+      },
+      {
+        "name": "",
+        "type": "string"
+      }
+    ],
+    "payable": false,
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "anonymous": false,
+    "inputs": [
+      {
+        "indexed": false,
+        "name": "info",
+        "type": "string"
+      },
+      {
+        "indexed": false,
+        "name": "location",
+        "type": "string"
+      },
+      {
+        "indexed": false,
+        "name": "street",
+        "type": "string"
+      },
+      {
+        "indexed": false,
+        "name": "time",
+        "type": "string"
+      }
+    ],
+    "name": "message",
+    "type": "event"
+  }
+]);
+      var MESSAGE=MESSAGEContract.at('0x2ecc08a2f6201aecaa3fdfb5dfc0724fe7e51231');
+      var MessageEvent=MESSAGE.message();
+      MessageEvent.watch(function(error,result) {
+        if(!error){
+          $("#message").append('<b style="color:#ff0000">Alert!</b> '+result.args.info+', <b>location:</b> '+result.args.location+', <b>street:</b> '+result.args.street+', <b>time:</b> '+result.args.time+'<br />');
+        }
+        else{
+          console.log(error);
+        }
+      });
+      console.log(MESSAGE);
+       $("#button").click(function(){
+          MESSAGE.setInfo($("#info").val(),$("#location").va(l),$("#street").val(),$("#time").val());
+        });
+    </script>
+
+</body>
+</html>

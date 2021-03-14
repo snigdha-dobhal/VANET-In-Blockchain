@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>VANET Smart Contract</title>
+
+    <link rel="stylesheet" type="text/css" href="main.css">
+
+    <script src="./node_modules/web3/dist/web3.min.js"></script>
+
+</head>
+<body>
+    <div class="container">
+
+        <h1 style="color:white;">VANET Vehicle Registration Portal</h1>
+
+        <h2 id="Vehicle"></h2>
+        
+
+        <label for="name" class="col-lg-2 control-label">Vehicle Name:</label>
+        <input id="name" type="text">
+
+        <label for="name" class="col-lg-2 control-label">Owner Name:</label>
+        <input id="owner" type="text">
+
+        <label for="name" class="col-lg-2 control-label">Vehicle Number:</label>
+        <input id="number" type="text">
+
+        <label for="name" class="col-lg-2 control-label">License ID:</label>
+        <input id="license" type="text">
+
+        <button id="button">Register Vehicle</button>
+        <p id="List"><b>All Vehicles Registered Yet:<br /><br /></b></p>
+
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"></script>
+
+    <script>
+       if (typeof web3 !== 'undefined') {
+           web3 = new Web3(web3.currentProvider);
+       } else {
+           web3 = new Web3(new Web3.providers.HttpProvider("http://localhost:8575"));
+       }
+
+       web3.eth.defaultAccount = web3.eth.accounts[4];
+
+       var VANETContract = web3.eth.contract([
+  {
+    "constant": false,
+    "inputs": [
+      {
+        "name": "_name",
+        "type": "string"
+      },
+      {
+        "name": "_owner",
+        "type": "string"
+      },
+      {
+        "name": "_number",
+        "type": "string"
+      },
+      {
+        "name": "_license",
+        "type": "string"
+      }
+    ],
+    "name": "setVehicle",
+    "outputs": [],
+    "payable": false,
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "constant": true,
+    "inputs": [],
+    "name": "getVehicle",
+    "outputs": [
+      {
+        "name": "",
+        "type": "string"
+      },
+      {
+        "name": "",
+        "type": "string"
+      },
+      {
+        "name": "",
+        "type": "string"
+      },
+      {
+        "name": "",
+        "type": "string"
+      }
+    ],
+    "payable": false,
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "anonymous": false,
+    "inputs": [
+      {
+        "indexed": false,
+        "name": "name",
+        "type": "string"
+      },
+      {
+        "indexed": false,
+        "name": "owner",
+        "type": "string"
+      },
+      {
+        "indexed": false,
+        "name": "number",
+        "type": "string"
+      },
+      {
+        "indexed": false,
+        "name": "license",
+        "type": "string"
+      }
+    ],
+    "name": "Vehicle",
+    "type": "event"
+  }
+]);
+      var VANET=VANETContract.at('0x5178362edCf85546aA46c886D9A024fA9C66dc5F');
+      var VehicleEvent=VANET.Vehicle();
+      VehicleEvent.watch(function(error, result) {
+        if(!error){
+          //$("#loader").hide();
+          $("#Vehicle").html('Last registered vehicle: '+result.args.name+', owner: '+result.args.owner+', number: '+result.args.number+', lic: ' + result.args.license); 
+          $("#List").append('<b>Model: </b>'+result.args.name+', <b>owner: </b>'+result.args.owner+', <b>Vehicle number: </b>'+result.args.number+', <b>lic: </b>' + result.args.license+'<br />');
+
+        } else {
+          //$("#loader").hide();
+          console.log("error");
+        }
+      });
+      console.log(VANET);
+       $("#button").click(function(){
+          VANET.setVehicle($("#name").val(),$("#owner").val(),$("#number").val(),$("#license").val());
+          //$("#loader").show();
+        });
+    
+
+
+    </script>
+
+</body>
+</html>

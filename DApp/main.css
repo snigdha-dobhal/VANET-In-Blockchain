@@ -1,0 +1,55 @@
+body {
+    background-image: url("2.jpg");
+    background-repeat: no-repeat;
+    background-size: cover;
+    padding: 2em;
+    font-family: 'Raleway','Source Sans Pro', 'Arial';
+}
+.container {
+    width: 50%;
+    margin: 0 auto;
+}
+label {
+    padding:0.5em;
+    background-color:#ffff;
+    opacity: 0.75;
+    display: table;
+    position: absolute;
+    left:175px;
+    font-weight: 700;
+    margin-bottom:10px;
+}
+input {
+    display: inline-table;
+    padding:10px;
+    width: 50%;
+    margin-bottom: 40px;
+}
+button {
+    margin: 2em 0;
+    padding: 1em 4em;
+    display:block;
+}
+
+#Vehicle {
+    padding:1em;
+    background-color:#ffff;
+    opacity: 0.5;
+    font-size: 15px;
+    margin-bottom: 40px;
+}
+
+#List {
+    padding:1em;
+    background-color:#ffff;
+    opacity: 0.75;
+    font-size: 15px;
+    width: 100%;
+    margin-top: 80px;
+}
+
+
+#loader {
+    width: 100px;
+    display:none;
+}
