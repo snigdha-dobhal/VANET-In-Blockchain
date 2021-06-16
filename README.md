@@ -45,4 +45,5 @@ A blockchain DApp based implementation of Vehicular Ad-hoc Netwoks to provide a 
    You can interact with it using the web UI as well as the Remix IDE Deployed contracts section.
    You can deploy multiple contracts and can test it with multiple accounts.
    
+   A VANET simulation can be performed using Sumo or NS3 and the data can be fed to the DApp.
    
