@@ -30,15 +30,26 @@ A blockchain DApp based implementation of Vehicular Ad-hoc Netwoks to provide a 
    
    
 4. Save the HTML and CSS files in your local. Make sure they are saved in the same folder.
-   Open the HTML files in a code editor and locate the following statement-
+   Open the HTML files in a code editor and locate the following statements-
+         
+            web3 = new Web3(new Web3.providers.HttpProvider("http://localhost:8545"));
+   This statement correponds to the socket on which your testrpc server is running. Update the port number if it is not the default 8545.
    
             web3.eth.defaultAccount = web3.eth.accounts[0];
    You need to update the index according to the account you selected in Remix IDE. 
    For eg, if you selected the fourth account, index will be 3 (zero-based indexing) and the statement would become- 
    
             web3.eth.defaultAccount = web3.eth.accounts[3];
-           
-   Update the statement in both HTML files, save them and open the HTML files in a web browser. 
+   
+   Go to the deploy and run transaction section of the Remix IDE and locate the sub-section: Deployed contracts. For each deployed contract you will find the        a statement similar to: 
+            
+            MESSAGE AT 0X64C...D5685(BLOCKCHAIN)
+   This is the address at which the smart contract has been deployed. Copy this address to clipboard and locate the following statement in the HTML file:
+            
+            var MESSAGE=MESSAGEContract.at('some address');
+   Replace the address with the address you copied from Remix IDE.
+   
+   Update these statements in both the HTML files, save them and open the HTML files in a web browser. 
   
   
 5. Go back to the Remix IDE and hit **Deploy**. Your DApp is now ready to function!
